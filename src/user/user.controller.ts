@@ -13,7 +13,7 @@ export class UserController {
     constructor(private usersService: UserService){}
     //查询用户list
     @Get('list')
-    // @UseFilters(HttpExceptionFilter)
+    @UseFilters(HttpExceptionFilter)
     getList(): Promise<User[]>{
         //throw new ForbiddenException();
         return this.usersService.getList();
@@ -27,7 +27,7 @@ export class UserController {
 
     @Get('pageList')
     @UseInterceptors(DataInterceptor)
-    @UseGuards(AuthGuard)
+    //@UseGuards(AuthGuard)
     @SetMetadata('role',['admin'])
     async findAll(@Query('page') page:number,@Query('pagesize') pagesize:number){
         const [users , total] = await this.usersService.findAll(page,pagesize);
